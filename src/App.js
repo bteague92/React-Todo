@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./app.css";
 
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
@@ -11,8 +12,8 @@ class App extends React.Component {
 
   ////Set all state and state changes in here
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       todos: [] /// Setting The todos to an empty array that I can add to
     };
@@ -29,9 +30,29 @@ class App extends React.Component {
     });
   };
 
-  filterCompleted = () => {};
+  clearCompleted = () => {
+    this.setState({
+      todos: this.state.todos.filter(todo => !todo.completed)
+    });
+  };
 
-  toggleCompleted = () => {};
+  toggleCompleted = id => {
+    // loop through groceries data
+    // find the grocery we clicked
+    // toggle that grocery's purchased property
+    this.setState({
+      todos: this.state.todos.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            completed: !item.completed
+          };
+        } else {
+          return item;
+        }
+      })
+    });
+  };
 
   render() {
     return (
@@ -40,8 +61,9 @@ class App extends React.Component {
         <div>
           <TodoForm addTodo={this.addTodo} />
           <TodoList
-            togglePurchased={this.togglePurchased}
             todos={this.state.todos}
+            toggleCompleted={this.toggleCompleted}
+            clearCompleted={this.clearCompleted}
           />
         </div>
       </div>

@@ -1,8 +1,8 @@
 import React from "react";
 
 class TodoForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       newTodo: ""
     };
@@ -19,19 +19,21 @@ class TodoForm extends React.Component {
     e.preventDefault();
     this.props.addTodo(this.state.newTodo);
     this.setState({ newTodo: "" });
+    console.log("it worked");
   };
 
   render() {
     return (
       <div>
-        <form>
-          <label htmlFor="todo">New Todo</label>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="todo">New Todo: </label>
           <input
             type="text"
             name="todo"
             id="todo"
-            value={this.state.newItem}
+            value={this.state.newTodo}
             onChange={this.handleChanges}
+            onSubmit={this.onSubmit}
           />
           <button>Add Todo</button>
         </form>
